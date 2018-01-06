@@ -7,8 +7,9 @@
 
 #define _g_error_free0(var) ((var == NULL) ? NULL : (var = (g_error_free (var), NULL)))
 
-typedef enum  {
-	ERROR_Thrower
+typedef enum
+{
+    ERROR_Thrower
 } Error;
 #define ERROR error_quark ()
 
@@ -19,125 +20,140 @@ gint vala_try (gint i);
 void _vala_main (void);
 
 
-GQuark error_quark (void) {
-	return g_quark_from_static_string ("error-quark");
+GQuark error_quark (void)
+{
+    return g_quark_from_static_string ("error-quark");
 }
 
 
-void thrower (gint i, GError** error) {
-	gint _tmp0_;
-	GError * _inner_error_ = NULL;
+void thrower (gint i, GError** error)
+{
+    gint _tmp0_;
+    GError* _inner_error_ = NULL;
 #line 8 "/tmp/try_bench/src/vala/main.vala"
-	_tmp0_ = i;
+    _tmp0_ = i;
 #line 8 "/tmp/try_bench/src/vala/main.vala"
-	if (_tmp0_ == 0) {
+    if (_tmp0_ == 0)
+    {
 #line 35 "main.c"
-		GError* _tmp1_;
+        GError* _tmp1_;
 #line 9 "/tmp/try_bench/src/vala/main.vala"
-		_tmp1_ = g_error_new_literal (ERROR, ERROR_Thrower, "error");
+        _tmp1_ = g_error_new_literal (ERROR, ERROR_Thrower, "error");
 #line 9 "/tmp/try_bench/src/vala/main.vala"
-		_inner_error_ = _tmp1_;
+        _inner_error_ = _tmp1_;
 #line 9 "/tmp/try_bench/src/vala/main.vala"
-		if (_inner_error_->domain == ERROR) {
+        if (_inner_error_->domain == ERROR)
+        {
 #line 9 "/tmp/try_bench/src/vala/main.vala"
-			g_propagate_error (error, _inner_error_);
+            g_propagate_error (error, _inner_error_);
 #line 9 "/tmp/try_bench/src/vala/main.vala"
-			return;
+            return;
 #line 47 "main.c"
-		} else {
+        }
+        else
+        {
 #line 9 "/tmp/try_bench/src/vala/main.vala"
-			g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+            g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__,
+                        _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 #line 9 "/tmp/try_bench/src/vala/main.vala"
-			g_clear_error (&_inner_error_);
+            g_clear_error (&_inner_error_);
 #line 9 "/tmp/try_bench/src/vala/main.vala"
-			return;
+            return;
 #line 55 "main.c"
-		}
-	}
+        }
+    }
 }
 
 
-gint vala_try (gint i) {
-	gint result = 0;
-	gint res = 0;
-	GError * _inner_error_ = NULL;
-	{
-		gint _tmp0_;
+gint vala_try (gint i)
+{
+    gint result = 0;
+    gint res = 0;
+    GError* _inner_error_ = NULL;
+    {
+        gint _tmp0_;
 #line 17 "/tmp/try_bench/src/vala/main.vala"
-		_tmp0_ = i;
+        _tmp0_ = i;
 #line 17 "/tmp/try_bench/src/vala/main.vala"
-		thrower (_tmp0_, &_inner_error_);
+        thrower (_tmp0_, &_inner_error_);
 #line 17 "/tmp/try_bench/src/vala/main.vala"
-		if (G_UNLIKELY (_inner_error_ != NULL)) {
+        if (G_UNLIKELY (_inner_error_ != NULL))
+        {
 #line 73 "main.c"
-			gint _tmp1_ = 0;
+            gint _tmp1_ = 0;
 #line 17 "/tmp/try_bench/src/vala/main.vala"
-			if (_inner_error_->domain == ERROR) {
+            if (_inner_error_->domain == ERROR)
+            {
 #line 77 "main.c"
-				goto __catch0_error;
-			}
+                goto __catch0_error;
+            }
 #line 17 "/tmp/try_bench/src/vala/main.vala"
-			g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+            g_critical ("file %s: line %d: unexpected error: %s (%s, %d)", __FILE__, __LINE__,
+                        _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 #line 17 "/tmp/try_bench/src/vala/main.vala"
-			g_clear_error (&_inner_error_);
+            g_clear_error (&_inner_error_);
 #line 17 "/tmp/try_bench/src/vala/main.vala"
-			return _tmp1_;
+            return _tmp1_;
 #line 86 "main.c"
-		}
+        }
 #line 18 "/tmp/try_bench/src/vala/main.vala"
-		res = 0;
+        res = 0;
 #line 90 "main.c"
-	}
-	goto __finally0;
-	__catch0_error:
-	{
-		GError* e = NULL;
-		GError* _tmp2_;
+    }
+    goto __finally0;
+__catch0_error:
+    {
+        GError* e = NULL;
+        GError* _tmp2_;
 #line 15 "/tmp/try_bench/src/vala/main.vala"
-		e = _inner_error_;
+        e = _inner_error_;
 #line 15 "/tmp/try_bench/src/vala/main.vala"
-		_inner_error_ = NULL;
+        _inner_error_ = NULL;
 #line 22 "/tmp/try_bench/src/vala/main.vala"
-		_tmp2_ = e;
+        _tmp2_ = e;
 #line 23 "/tmp/try_bench/src/vala/main.vala"
-		res = 1;
+        res = 1;
 #line 15 "/tmp/try_bench/src/vala/main.vala"
-		_g_error_free0 (e);
+        _g_error_free0 (e);
 #line 107 "main.c"
-	}
-	__finally0:
+    }
+__finally0:
 #line 15 "/tmp/try_bench/src/vala/main.vala"
-	if (G_UNLIKELY (_inner_error_ != NULL)) {
+    if (G_UNLIKELY (_inner_error_ != NULL))
+    {
 #line 112 "main.c"
-		gint _tmp3_ = 0;
+        gint _tmp3_ = 0;
 #line 15 "/tmp/try_bench/src/vala/main.vala"
-		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
+        g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__,
+                    _inner_error_->message, g_quark_to_string (_inner_error_->domain), _inner_error_->code);
 #line 15 "/tmp/try_bench/src/vala/main.vala"
-		g_clear_error (&_inner_error_);
+        g_clear_error (&_inner_error_);
 #line 15 "/tmp/try_bench/src/vala/main.vala"
-		return _tmp3_;
+        return _tmp3_;
 #line 120 "main.c"
-	}
+    }
 #line 25 "/tmp/try_bench/src/vala/main.vala"
-	result = res;
+    result = res;
 #line 25 "/tmp/try_bench/src/vala/main.vala"
-	return result;
+    return result;
 #line 126 "main.c"
 }
 
 
-void _vala_main (void) {
+void _vala_main (void)
+{
 }
 
 
-int main (int argc, char ** argv) {
+int main (int argc, char** argv)
+{
 #if !GLIB_CHECK_VERSION (2,35,0)
-	g_type_init ();
+    g_type_init ();
 #endif
 #line 28 "/tmp/try_bench/src/vala/main.vala"
-	_vala_main ();
+    _vala_main ();
 #line 28 "/tmp/try_bench/src/vala/main.vala"
-	return 0;
+    return 0;
 #line 142 "main.c"
 }
 
