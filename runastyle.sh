@@ -11,6 +11,9 @@ TEST_H_FILES_NUMBER=`find tests -type f -name "*.h" -printf x 2> /dev/null | wc 
 VALA_FILES_NUMBER=`find src -type f -name "*.vala" -printf x 2> /dev/null | wc -c`
 VAPI_FILES_NUMBER=`find vapi -type f -name "*.vapi" -printf x 2> /dev/null | wc -c`
 
+BENCH_CPP_FILES_NUMBER=`find bench -type f -name "*.cpp" -printf x 2> /dev/null | wc -c`
+BENCH_HPP_FILES_NUMBER=`find bench -type f -name "*.hpp" -printf x 2> /dev/null | wc -c`
+
 ASTYLE="astyle --style=allman --pad-oper --pad-first-paren-out --align-pointer=type --align-reference=type --lineend=windows --max-code-length=100 --indent-namespaces --convert-tabs"
 
 if [ $CPP_FILES_NUMBER -gt 0 ]; then
@@ -51,4 +54,12 @@ fi
 
 if [ $VAPI_FILES_NUMBER -gt 0 ]; then
     $ASTYLE --recursive "vapi/*.vapi"
+fi
+
+if [ $BENCH_CPP_FILES_NUMBER -gt 0 ]; then
+    $ASTYLE --recursive "bench/*.cpp"
+fi
+
+if [ $BENCH_HPP_FILES_NUMBER -gt 0 ]; then
+    $ASTYLE --recursive "bench/*.hpp"
 fi
