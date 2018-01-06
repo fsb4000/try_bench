@@ -256,3 +256,51 @@ BENCHMARK("Cexception_catch", [](benchpress::context* ctx)
 		benchpress::escape(static_cast<void*>(&res));
 	}
 })
+
+void thrower_cpp_const_char(int i)
+{
+    if (i == 0)
+        throw "error";
+}
+
+int cpp_try_const_char(int i)
+{
+    volatile int res = 0;
+    try
+    {
+        thrower_cpp_const_char(i);
+    }
+    catch(const char*)
+    {
+        res = 1;
+    }
+    return res;
+}
+
+BENCHMARK("c++_try_const_char", [](benchpress::context* ctx)
+{
+	int res = -5;
+	int b = 1;
+
+	ctx->reset_timer();
+	for (size_t i = 0; i < ctx->num_iterations(); ++i)
+	{
+		res = cpp_try_const_char(b);
+		assert(res == 0);
+		benchpress::escape(static_cast<void*>(&res));
+	}
+})
+
+BENCHMARK("c++_catch_const_char", [](benchpress::context* ctx)
+{
+    int res = -5;
+    int b = 0;
+
+	ctx->reset_timer();
+	for (size_t i = 0; i < ctx->num_iterations(); ++i)
+	{
+		res = cpp_try_const_char(b);
+		assert(res == 1);
+		benchpress::escape(static_cast<void*>(&res));
+	}
+})
