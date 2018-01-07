@@ -50,7 +50,7 @@ include mk/optional_ccache.mk
 include mk/choose_sanitizers_libs.mk
 include mk/disable_sanitizers_if_enabled_valgrind.mk
 
-all: bench
+all: bench nodius_bench
 
 solution_vala: $(OBJ_SOLUTION_VALA)
 	$(VALAC) -o bin/$@ $^ $(VALA_FLAGS) $(VALA_CFLAGS)
@@ -59,6 +59,8 @@ bench: CXXFLAGS += -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/
 bench: $(OBJ_BENCH)
 	$(CXX) -o bin/$@ $^ $(LDFLAGS) $(LIBS_CXX) $(LIBS_3RD_C) -lgobject-2.0 -lglib-2.0
 
+nodius_bench: bench/try_nonius.o
+	$(CXX) -o bin/$@ $^ $(LDFLAGS) $(LIBS_CXX) $(LIBS_3RD_C)
 
 clean:
 	$(RM_REC_START) "*.o" $(RM_REC_END)
